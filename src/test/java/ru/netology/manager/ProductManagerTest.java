@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.domain.Smartphone;
+import ru.netology.exception.AlreadyExistsException;
 import ru.netology.exception.NotFoundException;
+import ru.netology.manager.ProductManager;
 import ru.netology.repository.ProductRepository;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -55,5 +57,12 @@ public class ProductManagerTest {
         Product[] expected = new Product[]{product1, product2, book1, smartphone1, newProduct};
         Product[] actual = productManager.getAll();
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddOneItemExistsException() {
+        assertThrows(AlreadyExistsException.class, () -> {
+            productManager.add(product1);
+        });
     }
 }
